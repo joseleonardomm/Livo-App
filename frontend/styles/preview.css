@@ -1,0 +1,144 @@
+.preview-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.preview-header h2 {
+    color: var(--dark);
+    margin-bottom: 0.5rem;
+}
+
+.demo-notice {
+    background: #fff3cd;
+    color: #856404;
+    padding: 10px 20px;
+    border-radius: var(--radius);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+}
+
+/* Demo Frame */
+.preview-container {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 2rem;
+}
+
+.demo-frame {
+    background: white;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+}
+
+.frame-header {
+    background: #f1f3f4;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.frame-dots {
+    display: flex;
+    gap: 6px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.dot.red { background: #ff5f56; }
+.dot.yellow { background: #ffbd2e; }
+.dot.green { background: #27ca3f; }
+
+.frame-url {
+    color: var(--gray);
+    font-size: 0.9rem;
+}
+
+.frame-content {
+    height: 600px;
+    overflow-y: auto;
+    position: relative;
+}
+
+/* Loading State */
+.loading-demo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: var(--gray);
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 3px solid var(--light-gray);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Sidebar CTA */
+.preview-sidebar {
+    position: sticky;
+    top: 20px;
+    height: fit-content;
+}
+
+.cta-box {
+    background: white;
+    padding: 2rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+}
+
+.cta-box h3 {
+    color: var(--primary);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.benefits-list {
+    list-style: none;
+    margin: 1.5rem 0;
+}
+
+.benefits-list li {
+    padding: 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.benefits-list i {
+    color: var(--success);
+}
+
+.cta-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.cta-note {
+    text-align: center;
+    color: var(--gray);
+    font-size: 0.8rem;
+}

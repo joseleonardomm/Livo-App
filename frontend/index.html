@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebGen AI - Crea tu Demo Web en Minutos</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/questionnaire.css">
+    <link rel="stylesheet" href="styles/preview.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-robot"></i>
+                <h1>WebGen<span>AI</span></h1>
+            </div>
+            <p class="tagline">Tu página web en 5 minutos con IA</p>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Genera tu <span class="highlight">demo web automático</span></h2>
+                <p class="hero-subtitle">Responde 4 preguntas y obtén una demo funcional de tu sitio web</p>
+                <div class="features">
+                    <div class="feature">
+                        <i class="fas fa-bolt"></i>
+                        <p>Rápido: 2 minutos</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-magic"></i>
+                        <p>Generado por IA</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-laptop"></i>
+                        <p>Totalmente responsive</p>
+                    </div>
+                </div>
+                <button id="start-btn" class="btn-primary">
+                    <i class="fas fa-play"></i> Comenzar Ahora
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Questionnaire Section -->
+    <section id="questionnaire-section" class="section hidden">
+        <div class="container">
+            <div class="questionnaire-header">
+                <div class="progress-bar">
+                    <div class="progress" id="progress"></div>
+                </div>
+                <div class="step-indicator">
+                    <span class="step active" data-step="1">1</span>
+                    <span class="step" data-step="2">2</span>
+                    <span class="step" data-step="3">3</span>
+                    <span class="step" data-step="4">4</span>
+                </div>
+            </div>
+
+            <form id="questionnaire-form">
+                <!-- Question 1: Business Type -->
+                <div class="question active" data-question="1">
+                    <h3><span class="q-number">1.</span> ¿Qué tipo de negocio tienes?</h3>
+                    <div class="options-grid">
+                        <label class="option-card">
+                            <input type="radio" name="businessType" value="product-sales" required>
+                            <div class="option-content">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span>Venta de productos</span>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="radio" name="businessType" value="services">
+                            <div class="option-content">
+                                <i class="fas fa-concierge-bell"></i>
+                                <span>Servicios</span>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="radio" name="businessType" value="appointments">
+                            <div class="option-content">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span>Negocio por citas</span>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="radio" name="businessType" value="restaurant">
+                            <div class="option-content">
+                                <i class="fas fa-utensils"></i>
+                                <span>Restaurante</span>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="radio" name="businessType" value="hardware-store">
+                            <div class="option-content">
+                                <i class="fas fa-tools"></i>
+                                <span>Ferretería</span>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="radio" name="businessType" value="digital">
+                            <div class="option-content">
+                                <i class="fas fa-laptop-code"></i>
+                                <span>Emprendimiento digital</span>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="radio" name="businessType" value="other">
+                            <div class="option-content">
+                                <i class="fas fa-ellipsis-h"></i>
+                                <span>Otro</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 2: Features Needed -->
+                <div class="question" data-question="2">
+                    <h3><span class="q-number">2.</span> ¿Qué necesita tu web?</h3>
+                    <p class="subtext">Selecciona todo lo que aplique</p>
+                    <div class="options-grid multi-select">
+                        <label class="option-card">
+                            <input type="checkbox" name="features" value="show-products">
+                            <div class="option-content">
+                                <i class="fas fa-box-open"></i>
+                                <span>Mostrar productos</span>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="checkbox" name="features" value="catalog">
+                            <div class="option-content">
+                                <i class="fas fa-th-list"></i>
+                                <span>Catálogo simple</span>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="checkbox" name="features" value="whatsapp">
+                            <div class="option-content">
+                                <i class="fab fa-whatsapp"></i>
+                                <span>Botón de WhatsApp</span>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="checkbox" name="features" value="appointments">
+                            <div class="option-content">
+                                <i class="fas fa-calendar-check"></i>
+                                <span>Agenda de citas</span>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="checkbox" name="features" value="contact-form">
+                            <div class="option-content">
+                                <i class="fas fa-envelope"></i>
+                                <span>Formulario de contacto</span>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="checkbox" name="features" value="hours">
+                            <div class="option-content">
+                                <i class="fas fa-clock"></i>
+                                <span>Horarios</span>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="checkbox" name="features" value="location">
+                            <div class="option-content">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Ubicación (Google Maps)</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 3: Main Goal -->
+                <div class="question" data-question="3">
+                    <h3><span class="q-number">3.</span> ¿Cuál es tu objetivo principal?</h3>
+                    <div class="options-grid">
+                        <label class="option-card">
+                            <input type="radio" name="goal" value="sell" required>
+                            <div class="option-content">
+                                <i class="fas fa-dollar-sign"></i>
+                                <span>Vender</span>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="radio" name="goal" value="messages">
+                            <div class="option-content">
+                                <i class="fas fa-comments"></i>
+                                <span>Recibir mensajes</span>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="radio" name="goal" value="appointments-goal">
+                            <div class="option-content">
+                                <i class="fas fa-calendar-plus"></i>
+                                <span>Agendar citas</span>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="radio" name="goal" value="information">
+                            <div class="option-content">
+                                <i class="fas fa-info-circle"></i>
+                                <span>Mostrar información</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 4: Visual Style -->
+                <div class="question" data-question="4">
+                    <h3><span class="q-number">4.</span> ¿Qué estilo visual prefieres?</h3>
+                    <div class="options-grid">
+                        <label class="option-card">
+                            <input type="radio" name="style" value="modern" required>
+                            <div class="option-content">
+                                <div class="style-preview modern"></div>
+                                <span>Moderno</span>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="radio" name="style" value="minimalist">
+                            <div class="option-content">
+                                <div class="style-preview minimalist"></div>
+                                <span>Minimalista</span>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="radio" name="style" value="classic">
+                            <div class="option-content">
+                                <div class="style-preview classic"></div>
+                                <span>Clásico</span>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="radio" name="style" value="colorful">
+                            <div class="option-content">
+                                <div class="style-preview colorful"></div>
+                                <span>Colorido</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="navigation-buttons">
+                    <button type="button" id="prev-btn" class="btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Anterior
+                    </button>
+                    <button type="button" id="next-btn" class="btn-primary">
+                        Siguiente <i class="fas fa-arrow-right"></i>
+                    </button>
+                    <button type="submit" id="generate-btn" class="btn-success hidden">
+                        <i class="fas fa-magic"></i> Generar Demo
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Preview Section -->
+    <section id="preview-section" class="section hidden">
+        <div class="container">
+            <div class="preview-header">
+                <h2><i class="fas fa-eye"></i> Vista Previa de tu Demo</h2>
+                <p class="demo-notice">
+                    <i class="fas fa-info-circle"></i> 
+                    Esta es una demo generada automáticamente por IA
+                </p>
+            </div>
+            
+            <div class="preview-container">
+                <div class="demo-frame" id="demo-frame">
+                    <div class="frame-header">
+                        <div class="frame-dots">
+                            <span class="dot red"></span>
+                            <span class="dot yellow"></span>
+                            <span class="dot green"></span>
+                        </div>
+                        <span class="frame-url">demo-tu-negocio.webgenai.com</span>
+                    </div>
+                    <div class="frame-content" id="frame-content">
+                        <!-- Demo generado por IA se inyectará aquí -->
+                        <div class="loading-demo">
+                            <div class="spinner"></div>
+                            <p>Generando tu demo con IA...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="preview-sidebar">
+                    <div class="cta-box">
+                        <h3><i class="fas fa-rocket"></i> ¿Te gusta lo que ves?</h3>
+                        <p>Obtén tu página web profesional completa con:</p>
+                        <ul class="benefits-list">
+                            <li><i class="fas fa-check"></i> Diseño personalizado</li>
+                            <li><i class="fas fa-check"></i> Dominio personalizado</li>
+                            <li><i class="fas fa-check"></i> Hosting incluido</li>
+                            <li><i class="fas fa-check"></i> SEO optimizado</li>
+                            <li><i class="fas fa-check"></i> Soporte técnico</li>
+                        </ul>
+                        
+                        <div class="cta-buttons">
+                            <button id="whatsapp-cta" class="btn-whatsapp">
+                                <i class="fab fa-whatsapp"></i> Contactar por WhatsApp
+                            </button>
+                            <button id="email-cta" class="btn-secondary">
+                                <i class="fas fa-envelope"></i> Recibir presupuesto
+                            </button>
+                        </div>
+                        
+                        <p class="cta-note">
+                            <small>
+                                <i class="fas fa-shield-alt"></i> 
+                                Sin compromiso. Te contactaremos en 24 horas.
+                            </small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-robot"></i>
+                    <h3>WebGen<span>AI</span></h3>
+                </div>
+                <p class="footer-tagline">
+                    Generador automático de demos web con IA
+                </p>
+                <div class="footer-links">
+                    <a href="#"><i class="fas fa-question-circle"></i> Ayuda</a>
+                    <a href="#"><i class="fas fa-lock"></i> Privacidad</a>
+                    <a href="#"><i class="fas fa-file-alt"></i> Términos</a>
+                </div>
+                <p class="copyright">
+                    © 2024 WebGenAI. Demo gratuito. Servicio profesional requiere contratación.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/app.js"></script>
+    <script src="js/questionnaire.js"></script>
+    <script src="js/preview.js"></script>
+    <script src="js/api.js"></script>
+</body>
+</html>
