@@ -42,10 +42,85 @@ class LivoApp {
             preview: window.PreviewManager
         };
         
-        // Si algún componente no está disponible, cargarlo dinámicamente
-        if (!this.components.api) {
-            console.warn('ApiService no encontrado, cargando...');
-            // En una app real, podrías cargar dinámicamente aquí
+        // Si ApiService no está disponible, usar métodos directos
+        if (!this.components.api || typeof this.components.api.checkHealth !== 'function') {
+            console.warn('⚠️ ApiService no está disponible en la forma esperada');
+            console.warn('🔍 ApiService disponible:', this.components.api);
+            
+            // Crear una interfaz alternativa
+            this.components.api = {
+                checkHealth: async () => {
+                    try {
+                        const response = await fetch(CONFIG.API_BASE_URL + '/api/health');
+                        const data = await response.json();
+                        return {
+                            success: true,
+                            data,
+                            timestamp: new Date().toISOString()
+                        };
+                    } catch (error) {
+                        return {
+                            success: false,
+                            error: error.message,
+                            timestamp: new Date().toISOString()
+                        };
+                    }
+                },
+                
+                generateDemo: async (userData) => {
+                    try {
+                        const response = await fetch(CONFIG.API_BASE_URL + '/api/generate', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(userData)
+                        });
+                        
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        
+                        const data = await response.json();
+                        return {
+                            success: true,
+                            data,
+                            timestamp: new Date().toISOString()
+                        };
+                    } catch (error) {
+                        console.error('Error en generación:', error);
+                        return {
+                            success: false,
+                            error: error.message,
+                            timestamp: new Date().toISOString()
+                        };
+                    }
+                },
+                
+                sendLead: async (leadData) => {
+                    try {
+                        const response = await fetch(CONFIG.API_BASE_URL + '/api/lead', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(leadData)
+                        });
+                        const data = await response.json();
+                        return {
+                            success: true,
+                            data,
+                            timestamp: new Date().toISOString()
+                        };
+                    } catch (error) {
+                        return {
+                            success: false,
+                            error: error.message,
+                            timestamp: new Date().toISOString()
+                        };
+                    }
+                }
+            };
         }
     }
     
@@ -53,7 +128,8 @@ class LivoApp {
         console.log('🔍 Verificando estado de la API...');
         
         try {
-            const healthCheck = await ApiService.checkHealth();
+            // Usar el componente api, no la variable global directamente
+            const healthCheck = await this.components.api.checkHealth();
             this.state.apiStatus = healthCheck;
             
             if (healthCheck.success) {
@@ -311,8 +387,8 @@ class LivoApp {
                 featuresCount: userData.features.length
             });
             
-            // Llamar a la API
-            const result = await ApiService.generateDemo(userData);
+            // Llamar a la API usando el componente api
+            const result = await this.components.api.generateDemo(userData);
             
             // Actualizar estado
             this.state.generatedDemo = result;
@@ -484,8 +560,11 @@ class LivoApp {
         // Enviar error a tu backend para monitoreo
         if (this.components.api) {
             // No usar await para no bloquear
-            this.components.api.request('/api/error-log', 'POST', errorData)
-                .catch(() => { /* Ignorar errores en el logging */ });
+            fetch(CONFIG.API_BASE_URL + '/api/error-log', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(errorData)
+            }).catch(() => { /* Ignorar errores en el logging */ });
         }
     }
     
@@ -518,15 +597,35 @@ class LivoApp {
 
 // Inicializar aplicación cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', async () => {
-    // Asegurarse de que los archivos de configuración estén cargados
-    if (!window.CONFIG || !window.ApiService) {
-        console.error('Faltan archivos de configuración. Cargando...');
-        
-        // Esperar un momento para que se carguen los scripts
-        setTimeout(async () => {
-            window.app = new LivoApp();
-        }, 500);
+    console.log('📦 DOM cargado, verificando configuración...');
+    
+    // Esperar un momento para que se carguen todos los scripts
+    const waitForConfig = async (retries = 3, delay = 500) => {
+        for (let i = 0; i < retries; i++) {
+            if (window.CONFIG && window.ApiService) {
+                console.log('✅ Configuración cargada, iniciando app...');
+                return true;
+            }
+            console.log(`⏳ Esperando configuración... (intento ${i + 1}/${retries})`);
+            await new Promise(resolve => setTimeout(resolve, delay));
+        }
+        return false;
+    };
+    
+    const configLoaded = await waitForConfig();
+    
+    if (configLoaded) {
+        window.app = new LivoApp();
     } else {
+        console.error('❌ No se pudo cargar la configuración. Iniciando app con configuración básica...');
+        // Crear configuración básica si no se cargó
+        if (!window.CONFIG) {
+            window.CONFIG = {
+                API_BASE_URL: 'https://livo-app-backend.onrender.com',
+                APP: { NAME: 'Livo-App', VERSION: '1.0.0', ENV: 'production' },
+                STYLES: { COLORS: { PRIMARY: '#4361ee', SECONDARY: '#7209b7', SUCCESS: '#4cc9f0', DANGER: '#f72585' } }
+            };
+        }
         window.app = new LivoApp();
     }
 });
